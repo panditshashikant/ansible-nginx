@@ -1,0 +1,32 @@
+---
+- name: Update Host
+  apt: 
+    update_cache: true
+  become: true
+
+- name: Install nginx latest version
+  become: true
+  apt: name= {{ item }} state=present
+  with_items:
+    - nginx
+    - git
+
+- name: Start nginx
+  become: true
+  service: 
+    name: nginx
+    state: started
+
+- name: Update nginx default confs for html
+  template: "src=../templates/default.conf dest=/etc/nginx/sites-available/{{www_project}} owner=www-data group=www-data mode=0644"
+  become: yes
+
+- name: Enable site
+  file: src=/etc/nginx/sites-available/{{www_project}} dest=/etc/nginx/sites-enabled/{{www_project}} owner=www-data group=www-data state=link
+  become: yes
+
+- name: Copy HTML file
+  copy: src=/home/ubuntu/project/wordpress dest=/var/www/ owner=www-data group=www-data
+  notify:
+    - restart nginx
+  become: yes
