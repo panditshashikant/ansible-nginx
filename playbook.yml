@@ -3,7 +3,6 @@
   
   roles: 
     - nginx
-    - php
-    - mysql
     - wordpress
-
+    - mysql
+    - php

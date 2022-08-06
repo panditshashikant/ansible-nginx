@@ -18,11 +18,6 @@
   template: "src=../templates/default.conf dest=/etc/nginx/sites-available/{{www_project}} owner=www-data group=www-data mode=0644"
   become: yes
 
-- name Delete default nginx file
-  file:
-    path: /etc/nginx/sites-available/default
-    state: absent
-
 - name: Enable site
   file: src=/etc/nginx/sites-available/{{www_project}} dest=/etc/nginx/sites-enabled/{{www_project}} owner=www-data group=www-data state=link
   notify: 
