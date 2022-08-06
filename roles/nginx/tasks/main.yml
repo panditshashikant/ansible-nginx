@@ -22,6 +22,7 @@
   file: 
     path: /etc/nginx/sites-enabled/default
     state: absent
+  become: true
 
 - name: Enable site
   file: src=/etc/nginx/sites-available/{{www_project}} dest=/etc/nginx/sites-enabled/{{www_project}} owner=www-data group=www-data state=link
