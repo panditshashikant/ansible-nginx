@@ -18,12 +18,14 @@
   template: "src=../templates/default.conf dest=/etc/nginx/sites-available/{{www_project}} owner=www-data group=www-data mode=0644"
   become: yes
 
+- name Delete default nginx file
+  file:
+    path: /etc/nginx/sites-available/default
+    state: absent
+
 - name: Enable site
   file: src=/etc/nginx/sites-available/{{www_project}} dest=/etc/nginx/sites-enabled/{{www_project}} owner=www-data group=www-data state=link
-  become: yes
-
-- name: Copy HTML file
-  copy: src=/home/ubuntu/ansible-nginx/wordpress dest=/var/www/ owner=www-data group=www-data
-  notify:
+  notify: 
     - restart nginx
   become: yes
+
