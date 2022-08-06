@@ -2,5 +2,8 @@
 - hosts: webservers
   
   roles: 
-    - nginx 
+    - nginx
+    - php
+    - mysql
+    - wordpress
 
