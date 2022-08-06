@@ -6,11 +6,8 @@
 
 - name: Install nginx latest version
   become: true
-  apt: name= {{ item }} state=present
-  with_items:
-    - nginx
-    - git
-
+  apt: name=nginx state=present
+  
 - name: Start nginx
   become: true
   service: 
@@ -26,7 +23,7 @@
   become: yes
 
 - name: Copy HTML file
-  copy: src=/home/ubuntu/project/wordpress dest=/var/www/ owner=www-data group=www-data
+  copy: src=/home/ubuntu/ansible-nginx/wordpress dest=/var/www/ owner=www-data group=www-data
   notify:
     - restart nginx
   become: yes
